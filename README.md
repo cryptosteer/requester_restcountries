@@ -19,37 +19,27 @@ Sane default configuration is provided in the self-documenting
 The configuration may be overwritten via the following files, in order
 from lowest to highest priority:
 
-- `/etc/bitbucket_config.py`
-- `.bitbucket_config.py` in the User's home directory
-- `bitbucket_config.py` in the current directory
+- `/etc/restcountries_config.py`
+- `.restcountries_config.py` in the User's home directory
+- `restcountries_config.py` in the current directory
 
 # Minimum Configuration
 
-In order to access any non-public data, you MUST use a user acount for
-authentication. You can use the `AUTH_USER` and `AUTH_PASS` entries in
-the config file, or the overriding `-u` and `-p` command line
-parameters.
-
-The `TEAMS` variable contains a list of team usernames to base all
-queries on -- e.g. find members, repositories, etc. belonging to these
-teams. If set to `None`, the script will query for a list of teams the
-authenticating user is a member of.
+There is not specific configuration needed to run the script since it gather all the data from the API endpoint.
 
 
 # Usage
 
-Make sure authentication is configured (see above).
-
 Just run the script:
 
-    $ python3 bitbucket.py
+    $ python3 restcountries.py
 
 All command line parameters are optional and override the
 self-documenting variables of the same name in the config file.
 
 An overview can be found in the help screen:
 
-    usage: bitbucket.py [-h] [-u AUTH_USER] [-p AUTH_PASS] [-U USERNAME]
+    usage: restcountries.py [-h] [-u AUTH_USER] [-p AUTH_PASS] [-U USERNAME]
                         [-P API_PATH] [-i INGESTER] [-I] [-l LIMIT] [-r RETRIES]
                         [-t TIMEOUT] [-c] [-C] [-v]
     
@@ -79,31 +69,17 @@ An overview can be found in the help screen:
 
 # Data Structure
 
-The structure is taken from Bitbucket as is, and arrangend as follows:
+The structure is taken from restcountries.eu as is, and arrangend as follows:
 
     {
-        "members": <member data>,
-        "teams": [
-            {
-                "teamname": <team username>,
-                "member": <member username>
-            },
-            ...
+        "name": <name data>,
+        "capital": <capital data>,
+        "currencies": [
+            <courrencie data>,
+            <courrencie data>,
         ],
-        "repositories": <repository data>,
-        "commits": [
-            <commit data>,
-            <commit data>,
-            ...
-        },
-        "repository_branches": [
-            {
-                "repository": <repository full name>,
-                "branch": <branch name (local)>
-            },
-            ...
-        ]
+        "regionalBlocs": [
+            <regionalBloc data>,
+        ],
+        "region": <region data>
     }
-
-Each commit's branch names are stored in the commit data under
-`repository/branches`.
